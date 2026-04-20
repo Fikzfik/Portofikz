@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useTransitionSnapshot } from "./TransitionSnapshotProvider";
 
 export default function Preloader() {
+  const { setHasPreloaded } = useTransitionSnapshot();
   const preloaderRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -15,6 +17,7 @@ export default function Preloader() {
 
     const tl = gsap.timeline({
       onComplete: () => {
+        setHasPreloaded(true);
         if (preloaderRef.current) {
           preloaderRef.current.style.display = "none";
         }

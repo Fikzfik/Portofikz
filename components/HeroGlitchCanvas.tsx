@@ -84,6 +84,12 @@ void main() {
 }
 `;
 
+// --- GLOBAL TEXTURE CACHE ---
+// Kita memuat tekstur di luar komponen agar tetap persis di memori 
+// dan tidak perlu di-load ulang/di-dispose saat navigasi halaman.
+let cachedPortraitTexture: THREE.Texture | null = null;
+const textureLoader = new THREE.TextureLoader();
+
 interface HeroGlitchCanvasProps {
   themeColor: "red" | "blue";
 }
@@ -103,6 +109,12 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
+    // --- ANTI-DUPLICATION & CLEANUP ---
+    // Pastikan area mount bersih sebelum kita menempelkan kanvas baru
+    if (mountRef.current) {
+      mountRef.current.innerHTML = "";
+    }
+
     const onWindowResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -113,22 +125,25 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
     };
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef.current.appendChild(renderer.domElement);
+    // Tambahkan pengamanan agar tidak error saat mountRef dilepas mendadak
+    if (mountRef.current) {
+      mountRef.current.appendChild(renderer.domElement);
+    }
 
-    // --- TEXTURE ---
-    const textureLoader = new THREE.TextureLoader();
-    // Path menggunakan .png sesuai file siluet transparan kotak yang Anda sebutkan
-    const portraitTexture = textureLoader.load("/image/glitch.png");
-    portraitTexture.generateMipmaps = false;
-    portraitTexture.minFilter = THREE.LinearFilter;
-    portraitTexture.magFilter = THREE.LinearFilter;
+    // --- TEXTURE HANDLING ---
+    if (!cachedPortraitTexture) {
+      cachedPortraitTexture = textureLoader.load("/image/glitch.png");
+      cachedPortraitTexture.generateMipmaps = false;
+      cachedPortraitTexture.minFilter = THREE.LinearFilter;
+      cachedPortraitTexture.magFilter = THREE.LinearFilter;
+    }
 
     // --- MATERIAL ---
     const uniforms = {
       u_time: { value: 0.0 },
       u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-      u_texture: { value: portraitTexture },
-      u_intensity: { value: 1.0 }, // Standar distorsi
+      u_texture: { value: cachedPortraitTexture }, // Gunakan cache
+      u_intensity: { value: 1.0 },
     };
 
     materialRef.current = new THREE.ShaderMaterial({
@@ -149,14 +164,17 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
     const render = () => {
       const elapsedTime = clock.getElapsedTime();
       
-      // Spike glitch sesekali agar kesan "merobek" lebih kuat seperti referensi
-      if (Math.random() > 0.95) {
-        uniforms.u_intensity.value = 1.8;
-      } else {
-        uniforms.u_intensity.value += (0.8 - uniforms.u_intensity.value) * 0.1;
+      if (materialRef.current) {
+        if (Math.random() > 0.95) {
+          materialRef.current.uniforms.u_intensity.value = 1.8;
+        } else {
+          materialRef.current.uniforms.u_intensity.value += (0.8 - materialRef.current.uniforms.u_intensity.value) * 0.1;
+        }
+        materialRef.current.uniforms.u_time.value = elapsedTime;
+        // Pastikan tekstur terupdate jika baru saja selesai loading
+        materialRef.current.uniforms.u_texture.value = cachedPortraitTexture;
       }
-      
-      uniforms.u_time.value = elapsedTime;
+
       renderer.render(scene, camera);
       animationFrameId = requestAnimationFrame(render);
     };
@@ -168,12 +186,11 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
     return () => {
       window.removeEventListener("resize", onWindowResize);
       cancelAnimationFrame(animationFrameId);
-      if (mountRef.current) {
+      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
       }
       geometry.dispose();
       if (materialRef.current) materialRef.current.dispose();
-      portraitTexture.dispose();
       renderer.dispose();
     };
   }, []);
@@ -181,7 +198,7 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
   return (
     <div 
       ref={mountRef} 
-      // Spotlight terang di belakang tubuh lalu pudar ke hitam
+      // Penting: Pastikan z-index 0 dan relative/absolute agar terikat pada konteks Hero
       className="absolute inset-0 z-0 w-full h-full pointer-events-none"
       style={{ 
         overflow: 'hidden',

@@ -5,15 +5,19 @@ import React, { createContext, useContext, useState } from "react";
 interface TransitionContextType {
   snapshotHTML: string | null;
   snapshotScrollY: number;
+  hasPreloaded: boolean;
   triggerTransition: (html: string, scrollY: number) => void;
   clearSnapshot: () => void;
+  setHasPreloaded: (value: boolean) => void;
 }
 
 const TransitionContext = createContext<TransitionContextType>({
   snapshotHTML: null,
   snapshotScrollY: 0,
+  hasPreloaded: false,
   triggerTransition: () => {},
   clearSnapshot: () => {},
+  setHasPreloaded: () => {},
 });
 
 export function useTransitionSnapshot() {
@@ -23,6 +27,7 @@ export function useTransitionSnapshot() {
 export function TransitionSnapshotProvider({ children }: { children: React.ReactNode }) {
   const [snapshotHTML, setSnapshotHTML] = useState<string | null>(null);
   const [snapshotScrollY, setSnapshotScrollY] = useState(0);
+  const [hasPreloaded, setHasPreloaded] = useState(false);
 
   const triggerTransition = (html: string, scrollY: number) => {
     setSnapshotHTML(html);
@@ -34,7 +39,14 @@ export function TransitionSnapshotProvider({ children }: { children: React.React
   };
 
   return (
-    <TransitionContext.Provider value={{ snapshotHTML, snapshotScrollY, triggerTransition, clearSnapshot }}>
+    <TransitionContext.Provider value={{ 
+      snapshotHTML, 
+      snapshotScrollY, 
+      hasPreloaded, 
+      triggerTransition, 
+      clearSnapshot,
+      setHasPreloaded 
+    }}>
       {children}
     </TransitionContext.Provider>
   );

@@ -3,10 +3,12 @@
 import { useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useTransitionSnapshot } from "./TransitionSnapshotProvider";
 import SplitType from "split-type";
 import HeroGlitchCanvas from "./HeroGlitchCanvas";
 
 export default function Hero() {
+  const { hasPreloaded } = useTransitionSnapshot();
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -19,7 +21,7 @@ export default function Hero() {
 
     // Split text gaya mesin tik
     const text1 = new SplitType(titleRef.current, { types: "chars" });
-    const tl = gsap.timeline({ delay: 3.0 }); // Menunggu tirai preloader robek
+    const tl = gsap.timeline({ delay: hasPreloaded ? 0.3 : 3.0 }); // Menyesuaikan delay secara dinamis
     
     tl.from(text1.chars, {
       y: 20,

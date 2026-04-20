@@ -4,80 +4,84 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-const services = [
-  {
-    title: "Brand Strategy",
-    description: "Defining the unique value and positioning of your personal brand to stand out in a crowded market.",
-  },
-  {
-    title: "Digital Design",
-    description: "Creating sophisticated interfaces that combine elegance with functionality across all devices.",
-  },
-  {
-    title: "Development",
-    description: "Building fast, secure, and scalable solutions with precision engineering and clean architecture.",
-  },
-  {
-    title: "Motion & Interaction",
-    description: "Adding life to digital products through subtle, meaningful animations that enhance user journey.",
-  },
-];
+import TransitionLink from "./TransitionLink";
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".service-item", {
-      opacity: 0,
-      y: 100,
-      rotateX: -15,
-      duration: 1.5,
-      stagger: 0.15,
-      ease: "power4.out",
+    gsap.from(leftRef.current, {
       scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 75%",
+        trigger: sectionRef.current,
+        start: "top 80%",
       },
+      y: 100,
+      opacity: 0,
+      rotation: -5,
+      duration: 1.5,
+      ease: "power3.out",
+    });
+
+    gsap.from(rightRef.current, {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 70%",
+      },
+      y: 60,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power3.out",
     });
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="services" className="section-padding bg-[#fafafa]">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="mb-24 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-[1px] w-8 bg-black/20" />
-              <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-black/40">Services</span>
+    <section ref={sectionRef} id="services" className="py-32 px-6 md:px-12 w-full overflow-hidden">
+      <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center">
+        
+        {/* Kolom Kiri: Grafis "Red Cards" (Asimetris) */}
+        <div ref={leftRef} className="relative w-full aspect-[4/3] flex items-center justify-center">
+          <div className="absolute w-[60%] aspect-[3/2] bg-[#8a1c22] transform -rotate-12 translate-x-4 translate-y-4 rounded-sm shadow-xl flex items-center justify-center p-6 text-white/50 text-[10px] tracking-widest border border-white/10 uppercase">
+            Creative
+          </div>
+          <div className="absolute w-[60%] aspect-[3/2] bg-[#951f26] transform rotate-6 -translate-x-4 -translate-y-4 rounded-sm shadow-2xl p-6 border border-white/10 flex flex-col justify-between">
+            <div className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white/50 mb-4">
+              <span className="text-[10px]">FIX</span>
             </div>
-            <h2 className="text-5xl font-normal leading-tight tracking-tight md:text-7xl">
-              Solutions for the <span className="italic underline decoration-1 underline-offset-8">modern</span> age.
-            </h2>
+            <div className="text-white text-[12px] uppercase tracking-widest">
+              Digital<br/>Experience
+            </div>
           </div>
         </div>
 
-        <div ref={containerRef} className="grid grid-cols-1 gap-[1px] bg-black/5 md:grid-cols-2 overflow-hidden">
-          {services.map((service, index) => (
-            <div 
-              key={service.title}
-              className="service-item bg-[#fafafa] p-12 lg:p-20 hover:bg-white transition-all duration-700 group perspective-1000"
+        {/* Kolom Kanan: The "For Agencies" Box dengan Crosshair styling */}
+        <div ref={rightRef} className="flex justify-center md:justify-end">
+          <div className="relative p-12 md:p-16 max-w-sm flex flex-col items-center text-center">
+            {/* Ornamen Crosshairs di 4 Sudut */}
+            <span className="absolute top-0 left-0 text-[14px] text-[#111111]/30">+</span>
+            <span className="absolute top-0 right-0 text-[14px] text-[#111111]/30">+</span>
+            <span className="absolute bottom-0 left-0 text-[14px] text-[#111111]/30">+</span>
+            <span className="absolute bottom-0 right-0 text-[14px] text-[#111111]/30">+</span>
+
+            <h3 className="text-[20px] font-semibold tracking-tight text-[#111111] mb-6">
+              For Brands & Agencies
+            </h3>
+            <p className="text-[15px] font-medium leading-relaxed text-[#111111] mb-8">
+              Your agency a hand short? I{"'"}m here to slot in and ride along with your team. Reach out.
+            </p>
+            
+            <TransitionLink 
+              href="#contact" 
+              className="px-6 py-3 bg-[#050505] text-white text-[11px] uppercase tracking-widest hover:bg-[#8a1c22] transition-colors duration-500 rounded-sm"
             >
-              <span className="mb-12 block text-sm font-light text-black/20">
-                / {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mb-8 text-4xl font-normal tracking-tight md:text-5xl group-hover:italic transition-all duration-500 origin-left">
-                {service.title}
-              </h3>
-              <p className="max-w-sm text-lg font-light leading-relaxed text-black/50 group-hover:text-black/80 transition-colors duration-500">
-                {service.description}
-              </p>
-            </div>
-          ))}
+              Reach out
+            </TransitionLink>
+          </div>
         </div>
+
       </div>
     </section>
   );

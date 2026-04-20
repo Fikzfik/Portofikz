@@ -10,25 +10,25 @@ import TransitionLink from "./TransitionLink";
 const projects = [
   {
     title: "Minimal Studio",
-    category: "Architecture / Web",
+    category: "Architecture, Web",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1400",
     id: "01",
   },
   {
     title: "The Editorial",
-    category: "Design / Typography",
+    category: "Art Direction",
     image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1400",
     id: "02",
   },
   {
     title: "Lunar Identity",
-    category: "Branding / Motion",
+    category: "Branding",
     image: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=1400",
     id: "03",
   },
   {
     title: "Zen Spaces",
-    category: "Interior / Layout",
+    category: "Interior, Layout",
     image: "https://images.unsplash.com/photo-1614332284144-67252063d8d6?auto=format&fit=crop&q=80&w=1400",
     id: "04",
   },
@@ -55,14 +55,14 @@ export default function Projects() {
       },
     });
 
-    // Parallax on images inside horizontal scroll
+    // Efek Parallax halus pada gambar saat geser samping
     imageRefs.current.forEach((img) => {
       if (!img) return;
       const innerImg = img.querySelector("img");
       if (!innerImg) return;
 
       gsap.to(innerImg, {
-        x: -80,
+        x: -120, // Bergerak ke kiri sedikit melawan slide untuk parallax
         ease: "none",
         scrollTrigger: {
           trigger: img,
@@ -80,56 +80,65 @@ export default function Projects() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} id="work" className="bg-background">
+    <section ref={containerRef} id="work" className="bg-[#e6e6e6] text-[#111111]">
       <div className="overflow-hidden">
-        <div
-          ref={horizontalRef}
-          className="flex h-screen w-max items-center px-[5vw]"
-        >
+        
+        {/* Header Indicator Statically Floating or Just in Flow */}
+        <div className="absolute top-12 left-6 right-6 md:left-12 md:right-12 flex justify-between z-10 pointer-events-none mix-blend-difference">
+           <span className="text-[10px] md:text-[12px] font-medium tracking-[0.2em] uppercase text-white/50">
+             04 Works
+           </span>
+           <span className="text-[10px] md:text-[12px] font-medium tracking-[0.2em] uppercase text-white/50">
+             Selected Portfolio
+           </span>
+        </div>
+
+        <div ref={horizontalRef} className="flex h-screen w-max items-center px-[5vw]">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="relative flex h-full w-screen items-center justify-center p-8 md:p-24"
+              className="relative flex h-full w-screen items-center justify-center p-6 md:p-24"
             >
               <TransitionLink
                 href={`/work/${project.id}`}
                 className="group relative flex h-full w-full flex-col justify-center max-w-[1200px] cursor-pointer"
               >
+                
+                {/* Image Wrap */}
                 <div
-                  ref={(el) => {
-                    imageRefs.current[index] = el;
-                  }}
-                  className="relative aspect-[16/9] w-full overflow-hidden bg-black/5 grayscale hover:grayscale-0 transition-all duration-1000"
+                  ref={(el) => { imageRefs.current[index] = el; }}
+                  className="relative aspect-[16/9] w-full overflow-hidden bg-[#d9d9d9]"
                 >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="scale-125 object-cover"
+                    className="scale-125 object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-black/5 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0" />
                   
-                  {/* View Project indicator */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="bg-white/90 backdrop-blur-sm px-8 py-4 text-[11px] font-medium uppercase tracking-[0.3em] text-black">
+                  {/* View Project indicator (Minimalist) */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/5">
+                    <span className="bg-white px-8 py-3 text-[10px] font-medium uppercase tracking-[0.3em] text-black">
                       View Project
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-12 flex items-end justify-between overflow-hidden">
+                {/* Typography Bottom */}
+                <div className="mt-8 flex items-end justify-between overflow-hidden">
                   <div>
-                    <span className="mb-4 block text-[10px] uppercase tracking-[0.4em] text-black/40">
+                    <span className="mb-2 md:mb-4 block text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 font-medium">
                       {project.category}
                     </span>
-                    <h3 className="text-5xl font-normal leading-none md:text-7xl tracking-tighter">
+                    <h3 className="text-4xl lg:text-7xl font-semibold leading-tight tracking-tighter text-[#111111]">
                       {project.title}
                     </h3>
                   </div>
-                  <span className="text-8xl font-light italic text-black/[0.03] leading-none">
+                  <span className="text-5xl lg:text-8xl font-light italic text-[#111111]/10 leading-none pb-2">
                     {project.id}
                   </span>
                 </div>
+
               </TransitionLink>
             </div>
           ))}

@@ -26,7 +26,7 @@ export default function About() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="about" className="py-32 overflow-hidden flex justify-center items-center">
+    <section ref={sectionRef} id="about" className="pt-12 pb-32 overflow-hidden flex justify-center items-center">
       <div className="flex flex-col items-center gap-16 md:gap-24 w-full max-w-2xl px-6">
         
         {/* Statement 1 */}

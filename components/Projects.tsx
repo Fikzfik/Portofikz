@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,28 +9,39 @@ import TransitionLink from "./TransitionLink";
 
 const projects = [
   {
-    title: "Minimal Studio",
-    category: "Architecture, Web",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1400",
+    title: "Abinawa Heritage",
+    category: "Digital Heritage, Culture",
+    image: "/image/abinawa.webp",
+    gif: "/gif/ceritain.gif",
     id: "01",
   },
   {
-    title: "The Editorial",
-    category: "Art Direction",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1400",
+    title: "Event Hub",
+    category: "Platform, Management",
+    image: "/image/event-hub.png",
+    gif: "/gif/event-hub.gif",
     id: "02",
   },
   {
-    title: "Lunar Identity",
-    category: "Branding",
-    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=1400",
+    title: "Green Life",
+    category: "Ecommerce, Sustainability",
+    image: "/image/green-life.png",
+    gif: "/gif/green-life.gif",
     id: "03",
   },
   {
-    title: "Zen Spaces",
-    category: "Interior, Layout",
-    image: "https://images.unsplash.com/photo-1614332284144-67252063d8d6?auto=format&fit=crop&q=80&w=1400",
+    title: "Recipe Mama",
+    category: "Food, Community",
+    image: "/image/recipe-mama.png",
+    gif: "/gif/recipe-mama.gif",
     id: "04",
+  },
+  {
+    title: "HPC Japan",
+    category: "Consulting, Business",
+    image: "/image/hpc-japan.webp",
+    gif: "/gif/sakura-japan.gif",
+    id: "05",
   },
 ];
 
@@ -38,6 +49,45 @@ export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // --- MOUSE TRACKING FOR FLOATING PREVIEW ---
+  useEffect(() => {
+    if (!modalRef.current) return;
+
+    const xTo = gsap.quickTo(modalRef.current, "x", { duration: 0.6, ease: "power3" });
+    const yTo = gsap.quickTo(modalRef.current, "y", { duration: 0.6, ease: "power3" });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // --- POPUP REACTION ---
+  useEffect(() => {
+    if (!modalRef.current) return;
+    
+    if (hoveredIndex !== null) {
+      gsap.to(modalRef.current, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.4,
+        ease: "back.out(1.7)",
+      });
+    } else {
+      gsap.to(modalRef.current, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in",
+      });
+    }
+  }, [hoveredIndex]);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -81,12 +131,43 @@ export default function Projects() {
 
   return (
     <section ref={containerRef} id="work" className="bg-[#e6e6e6] text-[#111111]">
-      <div className="overflow-hidden">
+      <div className="relative overflow-hidden">
         
+        {/* 
+            FLOATING CURSOR MODAL:
+            Ini adalah jendela yang mengikuti kursor
+        */}
+        <div 
+          ref={modalRef}
+          className="pointer-events-none fixed left-0 top-0 z-[100] h-[220px] w-[320px] overflow-hidden rounded-xl bg-white shadow-2xl opacity-0 scale-0 origin-center"
+          style={{ 
+            marginTop: '-110px', 
+            marginLeft: '-160px' 
+          }}
+        >
+          <div className="relative h-full w-full">
+            {/* Blue dot indicator ala Studio Namma */}
+            <div className="absolute left-1/2 top-1/2 z-10 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.8)]" />
+            
+            {/* Dynamic Project GIF Preview */}
+            <div className="h-full w-full transition-transform duration-500 ease-out scale-110">
+              {hoveredIndex !== null && (
+                <Image
+                  src={projects[hoveredIndex].gif}
+                  alt="Preview GIF"
+                  fill
+                  unoptimized // Penting agar GIF tidak dikompres menjadi gambar statis
+                  className="object-cover"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
         {/* Header Indicator Statically Floating or Just in Flow */}
-        <div className="absolute top-12 left-6 right-6 md:left-12 md:right-12 flex justify-between z-10 pointer-events-none mix-blend-difference">
+        <div className="absolute top-4 left-6 right-6 md:left-12 md:right-12 flex justify-between z-10 pointer-events-none mix-blend-difference">
            <span className="text-[10px] md:text-[12px] font-medium tracking-[0.2em] uppercase text-white/50">
-             04 Works
+             05 Works
            </span>
            <span className="text-[10px] md:text-[12px] font-medium tracking-[0.2em] uppercase text-white/50">
              Selected Portfolio
@@ -101,6 +182,8 @@ export default function Projects() {
             >
               <TransitionLink
                 href={`/work/${project.id}`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 className="group relative flex h-full w-full flex-col justify-center max-w-[1200px] cursor-pointer"
               >
                 
@@ -113,7 +196,7 @@ export default function Projects() {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="scale-125 object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
+                    className="scale-125 object-cover hover:scale-110 transition-all duration-700 ease-out"
                   />
                   
                   {/* View Project indicator (Minimalist) */}
@@ -125,12 +208,12 @@ export default function Projects() {
                 </div>
 
                 {/* Typography Bottom */}
-                <div className="mt-8 flex items-end justify-between overflow-hidden">
+                <div className="mt-8 flex items-end justify-between overflow-hidden text-[#111111]">
                   <div>
                     <span className="mb-2 md:mb-4 block text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 font-medium">
                       {project.category}
                     </span>
-                    <h3 className="text-4xl lg:text-7xl font-semibold leading-tight tracking-tighter text-[#111111]">
+                    <h3 className="text-4xl lg:text-7xl font-semibold leading-tight tracking-tighter">
                       {project.title}
                     </h3>
                   </div>

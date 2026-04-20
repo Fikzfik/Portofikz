@@ -3,25 +3,30 @@
 import { useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTransitionSnapshot } from "./TransitionSnapshotProvider";
 import SplitType from "split-type";
 import HeroGlitchCanvas from "./HeroGlitchCanvas";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const { hasPreloaded } = useTransitionSnapshot();
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
+  const canvasWrapRef = useRef<HTMLDivElement>(null);
   
   // State untuk Shader Aura GLSL
   const [auraTheme, setAuraTheme] = useState<"blue" | "red">("blue");
 
+  // 1. Animasi Masuk (Intro)
   useGSAP(() => {
     if (!titleRef.current) return;
 
     // Split text gaya mesin tik
     const text1 = new SplitType(titleRef.current, { types: "chars" });
-    const tl = gsap.timeline({ delay: hasPreloaded ? 0.3 : 3.0 }); // Menyesuaikan delay secara dinamis
+    const tl = gsap.timeline({ delay: hasPreloaded ? 0.3 : 3.0 }); 
     
     tl.from(text1.chars, {
       y: 20,
@@ -41,10 +46,42 @@ export default function Hero() {
     };
   }, { scope: containerRef });
 
+  // 2. Animasi Scroll-Out (Lift Only) - Teks tetap solid hingga tertutup fisik
+  useGSAP(() => {
+    if (!infoRef.current || !canvasWrapRef.current) return;
+
+    // Teks naik secara perlahan (tanpa memudar)
+    // Disinkronkan 1:1 dengan scroll agar gap dengan seksi di bawahnya tetap konstan
+    gsap.to(infoRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      y: () => -window.innerHeight, // Sinkronisasi 1:1 dengan kecepatan scroll
+      ease: "none",
+    });
+
+    // Kanvas/Portrait tetap di tempat atau naik sedikit (tanpa memudar)
+    gsap.to(canvasWrapRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      y: -50, // Naik sedikit saja untuk efek parallax
+      ease: "none",
+    });
+  }, { scope: containerRef });
+
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center bg-background overflow-hidden">
       {/* 1. LAYER BAWAH: WebGL GLSL Glitch Canvas */}
-      <HeroGlitchCanvas themeColor={auraTheme} />
+      <div ref={canvasWrapRef} className="absolute inset-0 z-0">
+        <HeroGlitchCanvas themeColor={auraTheme} />
+      </div>
 
       {/* 2. OVERLAY GRAIN: Memberi tambahan kesan film sinematik */}
       <div className="absolute inset-0 z-10 pointer-events-none opacity-30 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />

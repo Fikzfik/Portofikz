@@ -8,17 +8,23 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main className="relative bg-[#050505] w-full overflow-x-hidden">
+    <main className="relative bg-[#050505] w-full">
       <CustomCursor />
       <Navbar />
       
-      {/* Hero Section Container with specific Z-index boundary */}
-      <div className="relative z-0">
+      {/* 
+        STICKY HERO ZONE: 
+        Hero akan tetap diam di layar selama seksi selanjutnya meluncur naik.
+      */}
+      <div className="sticky top-0 h-screen z-0">
         <Hero />
       </div>
       
-      {/* Light Split Theme Zone - Editorial Style */}
-      <div className="relative z-20 bg-[#e6e6e6] text-[#111111] pt-8 pb-32 shadow-[0_-50px_100px_rgba(0,0,0,0.1)]">
+      {/* 
+        BODY CONTENT (CURTAIN): 
+        Seksi ini akan meluncur naik di atas Hero (z-20).
+      */}
+      <div className="relative z-20 bg-[#e6e6e6] text-[#111111] pt-0 pb-32">
         <About />
         <Projects />
         <Services />

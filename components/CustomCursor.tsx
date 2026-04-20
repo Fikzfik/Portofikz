@@ -11,9 +11,8 @@ export default function CustomCursor() {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
-    // quickTo for smooth performant mouse follow
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.4, ease: "power3" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.4, ease: "power3" });
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.3, ease: "power3" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.3, ease: "power3" });
 
     const moveCursor = (e: MouseEvent) => {
       xTo(e.clientX);
@@ -48,6 +47,8 @@ export default function CustomCursor() {
     if (cursorRef.current) {
       gsap.to(cursorRef.current, {
         scale: isHovered ? 4 : 1,
+        backgroundColor: isHovered ? "rgba(0,0,0,0.05)" : "transparent",
+        borderColor: isHovered ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.4)",
         duration: 0.3,
         ease: "power2.out",
       });
@@ -57,7 +58,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-4 w-4 rounded-full bg-accent mix-blend-difference md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-6 w-6 rounded-full border border-black/40 md:block"
       style={{
         transform: "translate(-50%, -50%)",
       }}

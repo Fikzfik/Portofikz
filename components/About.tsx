@@ -1,143 +1,111 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-
-const traits = [
-  "Problem Solver",
-  "Detail Oriented",
-  "Team Player",
-  "Fast Learner",
-  "Creative Thinker",
-  "Clean Code",
-];
+import SplitType from "split-type";
 
 export default function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
+
+    if (!titleRef.current) return;
+    const splitTitle = new SplitType(titleRef.current, { types: "lines" });
+    
+    // Wrap lines for masking
+    splitTitle.lines?.forEach(line => {
+      const wrap = document.createElement("div");
+      wrap.className = "line-mask";
+      line.parentNode?.insertBefore(wrap, line);
+      wrap.appendChild(line);
+      line.classList.add("line-inner");
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 65%",
+        start: "top 70%",
       },
     });
 
-    tl.from(".about-img-wrap", {
-      x: -60,
+    tl.from(imageRef.current, {
+      scale: 1.2,
+      clipPath: "inset(100% 0 0 0)",
+      duration: 1.8,
+      ease: "expo.inOut",
+    })
+    .from(splitTitle.lines, {
+      y: 100,
       opacity: 0,
       duration: 1.2,
+      stagger: 0.1,
       ease: "power4.out",
-    })
-      .from(".about-accent-line", { scaleY: 0, duration: 0.8, ease: "power3.out" }, "-=0.8")
-      .from(".about-label", { y: 20, opacity: 0, duration: 0.7 }, "-=0.6")
-      .from(".about-title-line", { y: 60, opacity: 0, stagger: 0.1, duration: 1, ease: "power4.out" }, "-=0.6")
-      .from(".about-bio", { y: 30, opacity: 0, stagger: 0.15, duration: 0.8, ease: "power3.out" }, "-=0.6")
-      .from(".about-tag", { y: 15, opacity: 0, stagger: 0.06, duration: 0.5, ease: "power3.out" }, "-=0.5");
-  }, []);
+    }, "-=1")
+    .from(textRef.current, {
+      y: 20,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    }, "-=0.8");
+
+    return () => {
+      splitTitle.revert();
+    };
+  }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="about" className="py-32 md:py-40 px-6 md:px-16 bg-surface overflow-hidden">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        {/* Image Column */}
-        <div className="about-img-wrap relative">
-          {/* Accent vertical line */}
-          <div className="about-accent-line absolute -left-4 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-accent/30 to-transparent origin-top" />
-
-          <div className="relative h-[580px] md:h-[680px] overflow-hidden bg-[#0d0d0d]">
-            <Image
-              src="/profile.png"
-              alt="Fikz — Creative Developer & Designer"
-              fill
-              className="object-cover object-center"
-            />
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-
-            {/* Corner brackets */}
-            <div className="absolute top-5 left-5 w-12 h-12 border-t-2 border-l-2 border-accent/80" />
-            <div className="absolute bottom-5 right-5 w-12 h-12 border-b-2 border-r-2 border-accent/80" />
-
-            {/* Floating badge */}
-            <div className="absolute bottom-8 -right-4 md:-right-6 bg-accent text-black px-5 py-4 z-10">
-              <div className="text-[10px] uppercase tracking-[0.3em] font-bold">Based in</div>
-              <div className="text-sm font-bold uppercase tracking-wider mt-1">Indonesia 🇮🇩</div>
-            </div>
-          </div>
-
-          {/* Below image: experience indicator */}
-          <div className="mt-6 flex items-center gap-6 pl-4">
-            <div>
-              <div className="text-4xl font-bold text-accent font-display">5+</div>
-              <div className="text-xs text-[#555] uppercase tracking-widest mt-1">Years of Craft</div>
-            </div>
-            <div className="w-[1px] h-12 bg-white/10" />
-            <div>
-              <div className="text-4xl font-bold text-white font-display">50+</div>
-              <div className="text-xs text-[#555] uppercase tracking-widest mt-1">Projects Shipped</div>
-            </div>
-          </div>
+    <section ref={sectionRef} id="about" className="section-padding bg-background overflow-hidden">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-32">
+        <div ref={imageRef} className="relative aspect-[4/5] w-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+          <Image
+            src="/profile.png"
+            alt="Fikz Portrait"
+            fill
+            className="object-cover"
+          />
         </div>
 
-        {/* Content Column */}
-        <div>
-          <div className="about-label flex items-center gap-3 mb-8">
-            <div className="w-8 h-[1px] bg-accent" />
-            <span className="text-accent text-[10px] font-bold uppercase tracking-[0.4em]">About Me</span>
+        <div className="flex flex-col gap-12">
+          <div className="flex items-center gap-3">
+            <div className="h-[1px] w-8 bg-black/20" />
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-black/40">
+              Personal Note
+            </span>
           </div>
 
-          <div className="mb-10 overflow-hidden">
-            {["BUILDING THE", "WEB WITH", "PASSION."].map((line, i) => (
-              <div key={i} className="overflow-hidden">
-                <h2 className={`about-title-line font-display font-bold tracking-tighter leading-tight ${i === 2 ? "text-accent" : "text-white"}`}
-                  style={{ fontSize: "clamp(40px, 5.5vw, 72px)" }}
-                >
-                  {line}
-                </h2>
-              </div>
-            ))}
-          </div>
+          <h2 ref={titleRef} className="text-5xl font-normal leading-[1.1] tracking-tight md:text-7xl">
+            Simplicity is the <span className="italic">ultimate</span> sophistication.
+          </h2>
 
-          <div className="space-y-5 mb-12">
-            <p className="about-bio text-[#888] leading-relaxed text-base md:text-lg">
-              I'm <span className="text-white font-medium">Fikz</span>, a Creative Developer & Designer
-              who turns ambitious ideas into stunning digital realities. I bridge the gap between design
-              and engineering to create products that are not just functional — they're unforgettable.
+          <div ref={textRef} className="space-y-8 text-xl font-light leading-relaxed text-black/60">
+            <p>
+              I am Fikz, a creative developer based in Indonesia. I believe that digital experiences should be as beautiful as they are functional.
             </p>
-            <p className="about-bio text-[#888] leading-relaxed text-base md:text-lg">
-              My approach is rooted in obsessive attention to detail, clean architecture, and a deep
-              understanding of user experience. Every pixel is intentional. Every interaction tells
-              a story.
+            <p>
+              My work focuses on the intersection of minimalist design and high-performance engineering. I help brands communicate their message with clarity and elegance.
             </p>
           </div>
 
-          {/* Trait tags */}
-          <div className="flex flex-wrap gap-3">
-            {traits.map((trait) => (
-              <span
-                key={trait}
-                className="about-tag px-4 py-2 border border-white/10 text-sm text-[#777] hover:border-accent hover:text-accent transition-all duration-300 cursor-default"
-                data-cursor="hover"
-              >
-                {trait}
-              </span>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="mt-12">
-            <a
-              href="/resume.pdf"
-              className="inline-flex items-center gap-3 text-sm font-medium text-white border-b border-white/30 pb-1 hover:border-accent hover:text-accent transition-all duration-300"
-              data-cursor="hover"
-            >
-              Download Resume
-              <span>↗</span>
-            </a>
+          <div className="flex flex-wrap gap-x-12 gap-y-6 pt-4">
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase tracking-widest text-black/30">Experience</p>
+              <p className="text-2xl font-light italic">5+ Years</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase tracking-widest text-black/30">Based In</p>
+              <p className="text-2xl font-light italic">Indonesia</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase tracking-widest text-black/30">Focus</p>
+              <p className="text-2xl font-light italic">Premium Web</p>
+            </div>
           </div>
         </div>
       </div>

@@ -1,171 +1,98 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Send, ExternalLink } from "lucide-react";
-
-const socials = [
-  { name: "GitHub", url: "#" },
-  { name: "LinkedIn", url: "#" },
-  { name: "Instagram", url: "#" },
-  { name: "Twitter/X", url: "#" },
-  { name: "Behance", url: "#" },
-];
+import Magnetic from "./Magnetic";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({
+    gsap.from(".contact-line", {
+      opacity: 0,
+      y: 100,
+      rotateX: -45,
+      duration: 1.5,
+      stagger: 0.1,
+      ease: "power4.out",
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 65%",
+        start: "top 70%",
       },
     });
 
-    tl.from(".contact-label", { y: 20, opacity: 0, duration: 0.7, ease: "power3.out" })
-      .from(".contact-title-line", { y: 80, opacity: 0, stagger: 0.12, duration: 1.1, ease: "power4.out" }, "-=0.5")
-      .from(".contact-info", { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6")
-      .from(".contact-form-el", { y: 20, opacity: 0, stagger: 0.1, duration: 0.6, ease: "power3.out" }, "-=0.6")
-      .from(".contact-social", { y: 15, opacity: 0, stagger: 0.08, duration: 0.5, ease: "power3.out" }, "-=0.5");
-  }, []);
+    gsap.from(".contact-info-el", {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      stagger: 0.1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 60%",
+      },
+    });
+  }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="contact" className="py-32 md:py-40 px-6 md:px-16 bg-surface min-h-screen">
-      <div className="max-w-[1400px] mx-auto">
-        {/* Label */}
-        <div className="contact-label flex items-center gap-3 mb-16">
-          <div className="w-8 h-[1px] bg-accent" />
-          <span className="text-accent text-[10px] font-bold uppercase tracking-[0.4em]">Get In Touch</span>
-        </div>
-
-        {/* Huge heading */}
-        <div className="mb-20">
-          {["LET'S", "CREATE", "TOGETHER."].map((line, i) => (
-            <div key={i} className="overflow-hidden">
-              <h2
-                className={`contact-title-line font-display font-bold tracking-tighter leading-none ${
-                  i === 2 ? "text-accent" : "text-white"
-                }`}
-                style={{ fontSize: "clamp(50px, 10vw, 150px)" }}
-              >
-                {line}
+    <section ref={sectionRef} id="contact" className="section-padding bg-[#111111] text-white">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex flex-col gap-20 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-4xl">
+            <div className="mb-12 flex items-center gap-3">
+              <div className="h-[1px] w-8 bg-white/20" />
+              <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-white/40">Connect</span>
+            </div>
+            
+            <div className="overflow-hidden">
+              <h2 ref={headingRef} className="text-[12vw] font-normal leading-[0.85] tracking-tighter md:text-[10vw] uppercase">
+                <span className="contact-line block">Let's</span> 
+                <span className="contact-line block italic text-white/20 hover:text-white transition-colors duration-700">Discuss.</span>
               </h2>
-            </div>
-          ))}
-        </div>
-
-        {/* Content Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          {/* Left: Info */}
-          <div className="contact-info flex flex-col justify-between gap-12">
-            <div>
-              <p className="text-[#666] text-lg leading-relaxed mb-10 max-w-md">
-                Have a project, an idea, or just want to say hi? My inbox is always open. Let's make
-                something extraordinary.
-              </p>
-              <a
-                href="mailto:hello@fikzdev.com"
-                className="text-2xl md:text-3xl font-bold text-white hover:text-accent transition-colors duration-300 block mb-3 border-b border-white/10 pb-3 hover:border-accent"
-                data-cursor="hover"
-              >
-                hello@fikzdev.com
-              </a>
-              <a
-                href="tel:+6281234567890"
-                className="text-[#555] hover:text-accent transition-colors duration-300 text-sm"
-                data-cursor="hover"
-              >
-                +62 812 3456 7890
-              </a>
-            </div>
-
-            {/* Socials */}
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.4em] text-[#444] mb-6">Find me on</p>
-              <div className="flex gap-3 flex-wrap">
-                {socials.map(({ name, url }) => (
-                  <a
-                    key={name}
-                    href={url}
-                    className="contact-social flex items-center gap-2 px-5 py-3 border border-white/10 text-sm text-[#666] hover:border-accent hover:text-accent transition-all duration-300"
-                    data-cursor="hover"
-                  >
-                    <ExternalLink size={12} />
-                    <span className="text-xs uppercase tracking-widest">{name}</span>
-                  </a>
-                ))}
-              </div>
             </div>
           </div>
 
-          {/* Right: Form */}
-          <form className="flex flex-col gap-8">
-            <div className="contact-form-el">
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-[#444] mb-3">
-                Your Name
-              </label>
-              <input
-                type="text"
-                placeholder="John Doe"
-                className="w-full bg-transparent border-b border-white/10 py-4 text-white placeholder-[#333] focus:outline-none focus:border-accent transition-colors duration-300 text-base"
-              />
+          <div className="flex flex-col gap-10 pb-4">
+            <p className="contact-info-el max-w-xs text-xl font-light leading-relaxed text-white/40">
+              Transforming visions into elegant realities. I am currently accepting select projects for 2025.
+            </p>
+            
+            <div className="contact-info-el">
+              <Magnetic>
+                <a 
+                  href="mailto:hello@portofikz.com" 
+                  className="group relative text-3xl font-light italic inline-block p-4 -ml-4"
+                  data-cursor="hover"
+                >
+                  hello@portofikz.com
+                  <span className="absolute bottom-4 left-4 h-[1px] w-[calc(100%-32px)] bg-white/20 transition-all duration-500 group-hover:bg-white" />
+                </a>
+              </Magnetic>
             </div>
-            <div className="contact-form-el">
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-[#444] mb-3">
-                Email Address
-              </label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                className="w-full bg-transparent border-b border-white/10 py-4 text-white placeholder-[#333] focus:outline-none focus:border-accent transition-colors duration-300 text-base"
-              />
-            </div>
-            <div className="contact-form-el">
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-[#444] mb-3">
-                Project Type
-              </label>
-              <input
-                type="text"
-                placeholder="Web Design, Mobile App, Branding..."
-                className="w-full bg-transparent border-b border-white/10 py-4 text-white placeholder-[#333] focus:outline-none focus:border-accent transition-colors duration-300 text-base"
-              />
-            </div>
-            <div className="contact-form-el">
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-[#444] mb-3">
-                Tell me about your project
-              </label>
-              <textarea
-                placeholder="I have an idea for..."
-                rows={4}
-                className="w-full bg-transparent border-b border-white/10 py-4 text-white placeholder-[#333] focus:outline-none focus:border-accent transition-colors duration-300 text-base resize-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="contact-form-el self-start flex items-center gap-3 bg-accent text-black font-bold text-sm uppercase tracking-widest px-10 py-5 hover:bg-white transition-colors duration-300 group mt-2"
-              data-cursor="hover"
-            >
-              Send Message
-              <Send
-                size={14}
-                className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"
-              />
-            </button>
-          </form>
+          </div>
         </div>
 
-        {/* Footer Bar */}
-        <div className="mt-32 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="text-[#222] text-[10px] uppercase tracking-[0.3em]">
-            © 2026 Fikz — All rights reserved
-          </p>
-          <p className="text-[#222] text-[10px] uppercase tracking-[0.3em]">
-            Designed & Developed by{" "}
-            <span className="text-accent">Fikz</span>
+        <div className="mt-48 flex flex-col gap-10 border-t border-white/5 pt-16 md:flex-row md:items-center md:justify-between">
+          <div className="flex gap-4">
+            {["Instagram", "LinkedIn", "Twitter"].map((social) => (
+              <Magnetic key={social}>
+                <a 
+                  href="#" 
+                  className="contact-info-el px-6 py-2 text-[10px] font-medium uppercase tracking-[0.3em] text-white/30 hover:text-white transition-colors block"
+                  data-cursor="hover"
+                >
+                  {social}
+                </a>
+              </Magnetic>
+            ))}
+          </div>
+          <p className="contact-info-el text-[10px] uppercase tracking-[0.3em] text-white/10">
+            © 2026 Portofikz — All Rights Reserved
           </p>
         </div>
       </div>

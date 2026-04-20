@@ -1,29 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader";
+import ScreenTransition from "@/components/ScreenTransition";
+import { TransitionSnapshotProvider } from "@/components/TransitionSnapshotProvider";
 
 const inter = Inter({
-  variable: "--font-inter",
+  variable: "--font-sans",
   subsets: ["latin"],
-  display: "swap",
 });
 
-const syne = Syne({
-  variable: "--font-syne",
+const playfair = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin"],
-  display: "swap",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Fikz — Creative Developer & Designer",
-  description:
-    "Personal portfolio of Fikz — a Creative Developer & Designer based in Indonesia, crafting premium digital experiences with Next.js, GSAP, and modern web technologies.",
-  openGraph: {
-    title: "Fikz — Creative Developer & Designer",
-    description: "Crafting premium digital experiences that fuse art with technology.",
-    type: "website",
-  },
+  title: "Portofikz | Modern & Elegant Portfolio",
+  description: "A clean, sophisticated personal portfolio built with Next.js, GSAP, and Lenis.",
 };
 
 export default function RootLayout({
@@ -32,9 +28,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${syne.variable} antialiased`}>
-        <SmoothScroll>{children}</SmoothScroll>
+    <html lang="en" className="light">
+      <body
+        className={`${inter.variable} ${playfair.variable} antialiased selection:bg-black selection:text-white grain`}
+      >
+        <Preloader />
+        <TransitionSnapshotProvider>
+          <SmoothScroll>
+            <ScreenTransition>
+              {children}
+            </ScreenTransition>
+          </SmoothScroll>
+        </TransitionSnapshotProvider>
       </body>
     </html>
   );

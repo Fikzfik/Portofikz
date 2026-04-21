@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useTransitionSnapshot } from "./TransitionSnapshotProvider";
 
-interface TransitionLinkProps extends LinkProps {
+interface TransitionLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: React.ReactNode;
   className?: string;
   href: string;

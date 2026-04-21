@@ -9,6 +9,7 @@ import Experience from "@/components/Experience";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
+import Marquee from "@/components/Marquee";
 
 export default function Home() {
   return (
@@ -28,13 +29,21 @@ export default function Home() {
         BODY CONTENT (CURTAIN): 
         Seksi ini akan meluncur naik di atas Hero (z-20).
       */}
-      <div className="relative z-20 bg-[#e6e6e6] text-[#111111] pt-0 pb-32">
+      <div className="relative z-20 bg-[#e6e6e6] text-[#111111] pt-0 pb-12 overflow-hidden">
         <About />
         <Stats />
         <Projects />
+        
+        {/* Transition Breaker: Tech Stack */}
+        <Marquee text="TECH STACK / DIGITAL CRAFT / CORE EXPERTISE" speed={20} />
         <Skills />
+        
         <Experience />
+        
+        {/* Transition Breaker: Services */}
+        <Marquee text="SOLVING PROBLEMS / BUILDING VALUE / COLLABORATION" speed={25} direction="right" />
         <Services />
+        
         <Testimonials />
       </div>
       

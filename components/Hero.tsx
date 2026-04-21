@@ -119,9 +119,9 @@ export default function Hero() {
              >
                Fikri Ardiansyah.
                <br />
-               Design & Code for those 
+               Backend Development & 
                <br />
-               who refuse to settle.
+               Fullstack Engineering.
              </h1>
              
              <div className="mt-8 relative flex items-center justify-between w-[250px]">

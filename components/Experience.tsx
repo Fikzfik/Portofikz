@@ -7,33 +7,36 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const experiences = [
   {
-    year: "2026",
-    title: "Full-Stack & Motion Designer",
-    place: "Freelance / Remote",
-    tags: ["Next.js", "GSAP", "Supabase"],
+    year: "Jun 2023 - Present",
+    title: "Fullstack Engineer Apprenticeship",
+    place: "GoTo Impact Foundation (Generasi GIGIH 3.0)",
+    tags: ["MERN Stack", "Spotify API", "MongoDB", "Express"],
     current: true,
   },
   {
-    year: "2025",
-    title: "UI/UX Designer & Frontend Dev",
-    place: "Various Client Projects",
-    tags: ["Figma", "React", "TypeScript"],
+    year: "Jun 2023 - Aug 2023",
+    title: "Frontend Engineer",
+    place: "BKUI Universitas Muhammadiyah Surakarta",
+    tags: ["Next.js", "TailwindCSS", "Application System"],
     current: false,
   },
   {
-    year: "2024",
-    title: "Flutter Mobile Developer",
-    place: "Agency & Personal Projects",
-    tags: ["Flutter", "Dart", "Firebase"],
+    year: "Feb 2023 - May 2023",
+    title: "Fullstack Web Developer Intern",
+    place: "SOC MEDIA GRUP",
+    tags: ["Admin Dashboards", "Frontend Lead", "Laravel"],
     current: false,
   },
-  {
-    year: "2023",
-    title: "Started the Journey",
-    place: "Self-taught / Campus Projects",
-    tags: ["HTML/CSS", "JavaScript", "Design"],
-    current: false,
-  },
+];
+
+const certifications = [
+  { provider: "BNSP", name: "Junior Web Developer" },
+  { provider: "Dicoding", name: "Front-End Web Developer Expert" },
+  { provider: "Dicoding", name: "React Fundamentals" },
+  { provider: "Dicoding", name: "Back-End Fundamentals" },
+  { provider: "Dicoding", name: "AWS Cloud Practitioner" },
+  { provider: "Progate", name: "React & Node.js" },
+  { provider: "Sololearn", name: "JavaScript & HTML" },
 ];
 
 export default function Experience() {
@@ -64,6 +67,18 @@ export default function Experience() {
         start: "top 70%",
       },
     });
+
+    gsap.from(".cert-card", {
+      y: 20,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".certs-grid",
+        start: "top 85%",
+      },
+    });
   }, { scope: sectionRef });
 
   return (
@@ -87,12 +102,12 @@ export default function Experience() {
             </h2>
           </div>
           <p className="text-[14px] text-black/40 max-w-xs leading-relaxed">
-            A self-taught journey built on curiosity, craft, and relentless iteration.
+            A journey through professional growth, impactful internships, and engineering apprenticeships.
           </p>
         </div>
 
         {/* Timeline */}
-        <div className="relative">
+        <div className="relative mb-32">
           {/* Horizontal rule */}
           <div className="exp-line mb-0 h-[1px] bg-black/10 w-full" />
 
@@ -104,7 +119,7 @@ export default function Experience() {
               >
                 {/* Year */}
                 <div className="col-span-3 md:col-span-2">
-                  <span className="text-[13px] font-medium tracking-widest text-black/30 group-hover:text-[#951f26] transition-colors duration-500">
+                  <span className="text-[11px] font-medium tracking-widest text-black/40 group-hover:text-[#951f26] transition-colors duration-500">
                     {exp.year}
                   </span>
                   {exp.current && (
@@ -123,7 +138,7 @@ export default function Experience() {
                   <h3 className="text-[18px] md:text-[22px] font-medium tracking-tight text-[#111111] mb-1 group-hover:translate-x-1 transition-transform duration-500">
                     {exp.title}
                   </h3>
-                  <p className="text-[12px] text-black/40 uppercase tracking-widest">
+                  <p className="text-[12px] text-black/40 uppercase tracking-widest leading-relaxed">
                     {exp.place}
                   </p>
                 </div>
@@ -139,6 +154,32 @@ export default function Experience() {
                     </span>
                   ))}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div className="certs-container">
+          <div className="mb-12 flex items-center gap-3">
+             <div className="h-[1px] w-6 bg-[#951f26]" />
+             <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#951f26]">
+               Credentials
+             </span>
+          </div>
+          
+          <div className="certs-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {certifications.map((cert, i) => (
+              <div 
+                key={i}
+                className="cert-card p-6 bg-white/40 border border-black/[0.04] rounded-sm hover:bg-white hover:shadow-lg transition-all duration-500 cursor-default"
+              >
+                <span className="block text-[10px] uppercase tracking-widest text-[#951f26] font-bold mb-2">
+                  {cert.provider}
+                </span>
+                <p className="text-[14px] font-medium text-[#111111] leading-tight group-hover:text-[#951f26]">
+                  {cert.name}
+                </p>
               </div>
             ))}
           </div>

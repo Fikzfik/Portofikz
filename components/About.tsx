@@ -95,11 +95,11 @@ export default function About() {
           >
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
             <p className="text-[22px] md:text-[30px] font-medium leading-[1.2] tracking-tight text-[#111111] max-w-md">
-              Design shapes the world{" "}
+              Engineering systems that{" "}
               <br />
-              not as decoration, but as a{" "}
+              power the modern web{" "}
               <br />
-              <em className="italic text-[#951f26]">force that leaves a mark.</em>
+              <em className="italic text-[#951f26]">with backend-first precision.</em>
             </p>
           </div>
 
@@ -109,11 +109,11 @@ export default function About() {
           >
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
             <p className="text-[22px] md:text-[30px] font-medium leading-[1.2] tracking-tight text-[#111111] max-w-md">
-              It defines how your{" "}
+              Scalability isn&apos;t just{" "}
               <br />
-              brand is perceived and{" "}
+              a feature—it&apos;s the{" "}
               <br />
-              how it&apos;s experienced.
+              foundation of every build.
             </p>
           </div>
 
@@ -122,9 +122,14 @@ export default function About() {
             className="relative flex items-center justify-start w-full group"
           >
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
-            <p className="text-[28px] md:text-[40px] font-semibold leading-[1.1] tracking-tight text-[#111111] max-w-md">
-              Leave yours.
-            </p>
+            <div className="flex flex-col gap-2">
+              <p className="text-[14px] font-semibold uppercase tracking-widest text-[#951f26]">
+                UNAIR • HIMTI • UKM Esport
+              </p>
+              <p className="text-[20px] md:text-[28px] font-medium leading-[1.1] tracking-tight text-[#111111] max-w-md">
+                Informatics Engineering at <br/> Universitas Airlangga.
+              </p>
+            </div>
           </div>
 
           {/* Bio snippet */}
@@ -133,8 +138,9 @@ export default function About() {
             className="border-t border-black/10 pt-8"
           >
             <p className="text-[14px] leading-relaxed text-black/50 max-w-sm">
-              Based in Indonesia. Full-stack developer & UI designer specialising in 
-              high-end web experiences, motion design, and cross-platform mobile apps.
+              Specialized in Backend Development & Fullstack Engineering. 
+              Currently focused on building robust server-side applications, 
+              scalable APIs, and immersive 3D web experiences.
             </p>
           </div>
         </div>

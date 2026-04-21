@@ -62,8 +62,8 @@ export default function Stats() {
       <div className="mx-auto max-w-[1400px]">
         {/* Label */}
         <div className="mb-16 flex items-center gap-3">
-          <div className="h-[1px] w-6 bg-black/20" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-black/40">
+          <div className="h-[1px] w-6 bg-[#951f26]" />
+          <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#951f26]">
             By the numbers
           </span>
         </div>

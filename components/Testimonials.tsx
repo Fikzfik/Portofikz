@@ -100,8 +100,8 @@ export default function Testimonials() {
         {/* Header */}
         <div className="testimonial-label mb-20">
           <div className="mb-6 flex items-center gap-3">
-            <div className="h-[1px] w-6 bg-black/20" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-black/40">
+            <div className="h-[1px] w-6 bg-[#951f26]" />
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#951f26]">
               Social Proof
             </span>
           </div>
@@ -119,7 +119,7 @@ export default function Testimonials() {
             >
               {/* Index number */}
               <div className="col-span-2 md:col-span-1 pt-2">
-                <span className="text-[11px] text-black/20 font-medium tracking-widest">
+                <span className="text-[11px] text-black/20 font-medium tracking-widest group-hover:text-[#951f26] transition-colors duration-500">
                   {t.index}
                 </span>
               </div>

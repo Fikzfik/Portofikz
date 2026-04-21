@@ -10,7 +10,8 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
 
   const navLinks = [
-    { name: "Index", href: "#work" },
+    { name: "Work", href: "#work" },
+    { name: "Skills", href: "#skills" },
     { name: "Services", href: "#services" },
     { name: "Contact", href: "#contact" },
   ];

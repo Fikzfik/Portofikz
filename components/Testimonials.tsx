@@ -11,11 +11,19 @@ const testimonials = [
     quote: "A rare eye for detail and a master of minimalist aesthetics. The project was delivered with impeccable quality.",
     author: "Elena Rossi",
     role: "Editor, Vogue IT",
+    index: "01",
   },
   {
-    quote: "Working with Portofikz was a seamless experience. They turned complex requirements into an elegant solution.",
+    quote: "Working with Fikz was a seamless experience. Complex requirements turned into an elegant, high-performance solution.",
     author: "Marc Jacobs",
     role: "Director, Creative Lab",
+    index: "02",
+  },
+  {
+    quote: "The motion work alone set this project apart. Every micro-interaction felt intentional and refined.",
+    author: "Aria Santoso",
+    role: "Head of Product, Liaison Global",
+    index: "03",
   },
 ];
 
@@ -25,29 +33,55 @@ export default function Testimonials() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const quotes = sectionRef.current?.querySelectorAll('.testimonial-quote');
+    // Animate the section label
+    gsap.from(".testimonial-label", {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Animate each quote with SplitType
+    const quotes = sectionRef.current?.querySelectorAll(".testimonial-quote");
     quotes?.forEach((quote) => {
       const split = new SplitType(quote as HTMLElement, { types: "lines" });
-      
+
       gsap.from(split.lines, {
         opacity: 0,
-        y: 50,
-        rotateX: -10,
-        duration: 1.2,
-        stagger: 0.1,
+        y: 40,
+        duration: 1.3,
+        stagger: 0.08,
         ease: "power3.out",
         scrollTrigger: {
           trigger: quote,
-          start: "top 85%",
+          start: "top 88%",
         },
       });
     });
 
+    // Info rows
     gsap.from(".testimonial-info", {
       opacity: 0,
-      y: 20,
+      y: 16,
       duration: 1,
-      stagger: 0.3,
+      stagger: 0.2,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 70%",
+      },
+    });
+
+    // Divider lines
+    gsap.from(".testimonial-divider", {
+      scaleX: 0,
+      transformOrigin: "left center",
+      duration: 1.5,
+      stagger: 0.2,
       ease: "power3.out",
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -57,25 +91,61 @@ export default function Testimonials() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="section-padding bg-background">
+    <section
+      ref={sectionRef}
+      id="testimonials"
+      className="py-24 md:py-32 px-6 md:px-12 bg-[#e6e6e6] border-t border-black/[0.05]"
+    >
       <div className="mx-auto max-w-[1400px]">
-        <div className="grid grid-cols-1 gap-32 lg:grid-cols-2">
+        {/* Header */}
+        <div className="testimonial-label mb-20">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-[1px] w-6 bg-black/20" />
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-black/40">
+              Social Proof
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-normal tracking-tight text-[#111111]">
+            What they say
+          </h2>
+        </div>
+
+        {/* Testimonials List */}
+        <div className="space-y-0 divide-y divide-black/[0.06]">
           {testimonials.map((t, i) => (
-            <div key={i} className="flex flex-col gap-12">
-              <span className="text-8xl text-black/[0.03] font-serif italic leading-none h-12">"</span>
-              <p className="testimonial-quote text-3xl font-light italic leading-tight md:text-5xl text-black/80 tracking-tight">
-                {t.quote}
-              </p>
-              <div className="testimonial-info flex flex-col gap-2">
-                <p className="text-xl font-medium tracking-tight">{t.author}</p>
-                <div className="flex items-center gap-3">
-                  <div className="h-[1px] w-4 bg-black/20" />
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-black/30 font-medium">{t.role}</p>
-                </div>
+            <div
+              key={i}
+              className="group py-12 md:py-16 grid grid-cols-12 gap-6 md:gap-12 items-start"
+            >
+              {/* Index number */}
+              <div className="col-span-2 md:col-span-1 pt-2">
+                <span className="text-[11px] text-black/20 font-medium tracking-widest">
+                  {t.index}
+                </span>
+              </div>
+
+              {/* Quote */}
+              <div className="col-span-10 md:col-span-8">
+                <p className="testimonial-quote text-[22px] md:text-[32px] lg:text-[38px] font-light italic leading-[1.3] tracking-tight text-[#111111]/80 group-hover:text-[#111111] transition-colors duration-700">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+              </div>
+
+              {/* Author info */}
+              <div className="testimonial-info col-span-12 md:col-span-3 md:pt-2 flex flex-col gap-1 md:text-right">
+                <p className="text-[15px] font-semibold tracking-tight text-[#111111]">
+                  {t.author}
+                </p>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-black/35 font-medium">
+                  {t.role}
+                </p>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Bottom divider */}
+        <div className="testimonial-divider mt-4 h-[1px] bg-black/10 w-full" />
       </div>
     </section>
   );

@@ -202,7 +202,7 @@ export default function HeroGlitchCanvas({ themeColor }: HeroGlitchCanvasProps) 
       className="absolute inset-0 z-0 w-full h-full pointer-events-none"
       style={{ 
         overflow: 'hidden',
-        background: 'radial-gradient(ellipse at 50% 50%, #909090 0%, #050505 65%)'
+        background: 'radial-gradient(ellipse at 50% 50%, #200508 0%, #050505 65%)'
       }}
     />
   );

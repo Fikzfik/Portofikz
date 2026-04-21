@@ -18,7 +18,7 @@ export default function Hero() {
   const canvasWrapRef = useRef<HTMLDivElement>(null);
   
   // State untuk Shader Aura GLSL
-  const [auraTheme, setAuraTheme] = useState<"blue" | "red">("blue");
+  const [auraTheme, setAuraTheme] = useState<"blue" | "red">("red");
 
   // 1. Animasi Masuk (Intro)
   useGSAP(() => {
@@ -84,7 +84,7 @@ export default function Hero() {
       </div>
 
       {/* 2. OVERLAY GRAIN: Memberi tambahan kesan film sinematik */}
-      <div className="absolute inset-0 z-10 pointer-events-none opacity-30 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="absolute inset-0 z-10 pointer-events-none opacity-30 mix-blend-overlay bg-[url('/noise.svg')]" />
 
       {/* 3. KONTEN UI CYBERPUNK (Minimalist Typography) */}
       <div

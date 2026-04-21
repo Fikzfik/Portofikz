@@ -5,13 +5,16 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useTransitionSnapshot } from "./TransitionSnapshotProvider";
 
-interface TransitionLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  children: React.ReactNode;
-  className?: string;
+interface TransitionLinkProps extends React.ComponentPropsWithoutRef<"a"> {
   href: string;
 }
 
-export default function TransitionLink({ children, href, className, ...props }: TransitionLinkProps) {
+export default function TransitionLink({ 
+  children, 
+  href, 
+  className, 
+  ...props 
+}: TransitionLinkProps) {
   const router = useRouter();
   const { triggerTransition } = useTransitionSnapshot();
 

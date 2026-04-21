@@ -46,5 +46,7 @@ export default function Magnetic({ children }: { children: React.ReactElement })
     };
   }, []);
 
-  return React.cloneElement(children, { ref });
+  return React.cloneElement(children, {
+    ref,
+  } as React.RefAttributes<HTMLElement>);
 }

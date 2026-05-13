@@ -94,12 +94,12 @@ export default function About() {
             className="relative flex items-center justify-start w-full group"
           >
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
-            <p className="text-[22px] md:text-[30px] font-medium leading-[1.2] tracking-tight text-[#111111] max-w-md">
-              Engineering systems that{" "}
+            <p className="text-[22px] md:text-[34px] font-medium leading-[1.1] tracking-tight text-[#111111] max-w-md">
+              Bridging the gap between{" "}
               <br />
-              power the modern web{" "}
+              robust backend logic{" "}
               <br />
-              <em className="italic text-[#951f26]">with backend-first precision.</em>
+              <em className="italic text-[#951f26]">and fluid user interaction.</em>
             </p>
           </div>
 
@@ -108,12 +108,12 @@ export default function About() {
             className="relative flex items-center justify-start w-full group"
           >
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
-            <p className="text-[22px] md:text-[30px] font-medium leading-[1.2] tracking-tight text-[#111111] max-w-md">
+            <p className="text-[22px] md:text-[34px] font-medium leading-[1.1] tracking-tight text-[#111111] max-w-md">
               Scalability isn&apos;t just{" "}
               <br />
-              a feature—it&apos;s the{" "}
+              a technical goal—it&apos;s the{" "}
               <br />
-              foundation of every build.
+              soul of every architecture.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function About() {
             <span className="absolute -left-4 top-0 text-[#111111]/20 text-[10px]">■</span>
             <div className="flex flex-col gap-2">
               <p className="text-[14px] font-semibold uppercase tracking-widest text-[#951f26]">
-                UNAIR • HIMTI • UKM Esport
+                UNAIR • HIMTI • SOFTWARE HOUSE
               </p>
               <p className="text-[20px] md:text-[28px] font-medium leading-[1.1] tracking-tight text-[#111111] max-w-md">
                 Informatics Engineering at <br/> Universitas Airlangga.
@@ -137,10 +137,10 @@ export default function About() {
             ref={(el) => { textRefs.current[4] = el; }}
             className="border-t border-black/10 pt-8"
           >
-            <p className="text-[14px] leading-relaxed text-black/50 max-w-sm">
-              Specialized in Backend Development & Fullstack Engineering. 
-              Currently focused on building robust server-side applications, 
-              scalable APIs, and immersive 3D web experiences.
+            <p className="text-[14px] leading-relaxed text-black/60 max-w-sm">
+              Specialized in high-performance Backend Development & Fullstack Engineering. 
+              Currently focused on building distributed systems, 
+              event-driven architectures, and immersive 3D-infused web ecosystems.
             </p>
           </div>
         </div>

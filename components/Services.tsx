@@ -66,11 +66,11 @@ export default function Services() {
             <span className="absolute bottom-0 left-0 text-[14px] text-white/20">+</span>
             <span className="absolute bottom-0 right-0 text-[14px] text-white/20">+</span>
 
-            <h3 className="text-[20px] font-semibold tracking-tight text-white mb-6">
-              For Brands & Agencies
+            <h3 className="text-[20px] font-semibold tracking-tight text-white mb-6 uppercase tracking-[0.2em]">
+              For Forward-Thinking Brands
             </h3>
             <p className="text-[15px] font-medium leading-relaxed text-white/70 mb-8">
-              Your agency a hand short? I{"'"}m here to slot in and ride along with your team. Reach out.
+              Need technical reinforcement? I integrate seamlessly with your team to deliver robust digital solutions. Let&apos;s collaborate.
             </p>
             
             <TransitionLink 

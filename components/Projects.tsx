@@ -9,36 +9,41 @@ import TransitionLink from "./TransitionLink";
 
 const projects = [
   {
-    title: "Campus Event Hub",
-    category: "Management Platform",
+    title: "EventAir",
+    category: "Event Management / UX Design",
+    description: "A comprehensive platform for campus event orchestration, featuring real-time attendance and dynamic scheduling.",
     image: "/image/event-hub.png",
     gif: "/gif/event-hub.gif",
     id: "01",
   },
   {
-    title: "Green Life",
-    category: "Sustainability E-commerce",
+    title: "EcoSphere",
+    category: "Sustainability / E-commerce",
+    description: "Reimagining sustainable shopping through a minimalist and performance-driven marketplace experience.",
     image: "/image/green-life.png",
     gif: "/gif/green-life.gif",
     id: "02",
   },
   {
-    title: "Recipe Mama",
-    category: "Culinary Community",
+    title: "Culinara",
+    category: "Social Media / Gastronomy",
+    description: "Connecting culinary enthusiasts through a shared community space for recipes and gastronomic stories.",
     image: "/image/recipe-mama.png",
     gif: "/gif/recipe-mama.gif",
     id: "03",
   },
   {
-    title: "Spotify Clone",
-    category: "Entertainment API Integration",
+    title: "SonicFlow",
+    category: "Entertainment / API Integration",
+    description: "High-fidelity music streaming interface with seamless Spotify API integration and custom playback logic.",
     image: "/image/abinawa.webp",
     gif: "/gif/ceritain.gif",
     id: "04",
   },
   {
-    title: "SIMAK-GO (Academic)",
-    category: "Backend Clean Architecture",
+    title: "SIMAK-GO",
+    category: "Backend / Clean Architecture",
+    description: "Academic information system built with Go, emphasizing scalability and robust database design.",
     image: "/image/hpc-japan.webp",
     gif: "/gif/sakura-japan.gif",
     id: "05",
@@ -105,24 +110,7 @@ export default function Projects() {
       },
     });
 
-    // Efek Parallax halus pada gambar saat geser samping
-    imageRefs.current.forEach((img) => {
-      if (!img) return;
-      const innerImg = img.querySelector("img");
-      if (!innerImg) return;
-
-      gsap.to(innerImg, {
-        x: -120, // Bergerak ke kiri sedikit melawan slide untuk parallax
-        ease: "none",
-        scrollTrigger: {
-          trigger: img,
-          containerAnimation: horizontalScroll,
-          start: "left right",
-          end: "right left",
-          scrub: true,
-        },
-      });
-    });
+    // Efek hover pada gambar tetap ada via CSS
 
     return () => {
       horizontalScroll.kill();
@@ -139,10 +127,10 @@ export default function Projects() {
         */}
         <div 
           ref={modalRef}
-          className="pointer-events-none fixed left-0 top-0 z-[100] h-[220px] w-[320px] overflow-hidden rounded-xl bg-white shadow-2xl opacity-0 scale-0 origin-center"
+          className="pointer-events-none fixed left-0 top-0 z-[100] h-[200px] w-[280px] overflow-hidden rounded-lg bg-white shadow-2xl opacity-0 scale-0 origin-center"
           style={{ 
-            marginTop: '-110px', 
-            marginLeft: '-160px' 
+            marginTop: '-100px', 
+            marginLeft: '-140px' 
           }}
         >
           <div className="relative h-full w-full">
@@ -184,42 +172,52 @@ export default function Projects() {
                 href={`/work/${project.id}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="group relative flex h-full w-full flex-col justify-center max-w-[1200px] cursor-pointer"
+                className="group relative flex h-[70vh] w-full flex-col lg:flex-row items-center gap-8 lg:gap-16 max-w-[1400px] cursor-pointer"
               >
                 
                 {/* Image Wrap */}
                 <div
                   ref={(el) => { imageRefs.current[index] = el; }}
-                  className="relative aspect-[16/9] w-full overflow-hidden bg-[#d9d9d9]"
+                  className="relative aspect-[4/3] lg:aspect-[16/10] w-full lg:w-3/5 overflow-hidden bg-[#d1d1d1] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-black/5"
                 >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="scale-125 object-cover hover:scale-110 transition-all duration-700 ease-out"
+                    className="scale-125 object-cover hover:scale-110 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
                   />
                   
                   {/* View Project indicator (Minimalist) */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/5">
-                    <span className="bg-white px-8 py-3 text-[10px] font-medium uppercase tracking-[0.3em] text-black">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-black/20 backdrop-blur-[4px]">
+                    <span className="bg-white px-8 py-3 text-[10px] font-bold uppercase tracking-[0.4em] text-black">
                       View Project
                     </span>
                   </div>
                 </div>
 
-                {/* Typography Bottom */}
-                <div className="mt-8 flex items-end justify-between overflow-hidden text-[#111111]">
+                {/* Typography Side */}
+                <div className="flex flex-col justify-between h-full py-4 lg:py-12 w-full lg:w-2/5 text-[#111111]">
                   <div>
-                    <span className="mb-2 md:mb-4 block text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 font-medium">
-                      {project.category}
-                    </span>
-                    <h3 className="text-4xl lg:text-7xl font-semibold leading-tight tracking-tighter">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="h-[1px] w-8 bg-[#111111]/20"></span>
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-[#111111]/60 font-semibold">
+                        {project.category}
+                      </span>
+                    </div>
+                    <h3 className="text-5xl lg:text-8xl font-bold leading-[0.9] tracking-tighter mb-6">
                       {project.title}
                     </h3>
+                    <p className="text-[14px] leading-relaxed text-[#111111]/60 max-w-sm hidden lg:block">
+                      {project.description}
+                    </p>
                   </div>
-                  <span className="text-5xl lg:text-8xl font-light italic text-[#111111]/10 leading-none pb-2">
-                    {project.id}
-                  </span>
+                  
+                  <div className="relative mt-auto">
+                    <div className="h-[2px] w-12 bg-[#951f26] mb-4 lg:hidden"></div>
+                    <span className="text-[140px] lg:text-[240px] font-black italic text-[#111111]/5 leading-none absolute bottom-0 right-0 lg:static lg:block select-none pointer-events-none">
+                      {project.id}
+                    </span>
+                  </div>
                 </div>
 
               </TransitionLink>

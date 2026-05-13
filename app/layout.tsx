@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Portofikz | Modern & Elegant Portfolio",
+  title: "Fikri Ardiansyah | Modern & Elegant Portfolio",
   description: "A clean, sophisticated personal portfolio built with Next.js, GSAP, and Lenis.",
 };
 

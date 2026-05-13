@@ -40,7 +40,7 @@ export default function Navbar() {
               href="/"
               className="text-[14px] md:text-[18px] font-bold tracking-tighter text-white block"
             >
-              Fikri <span className="opacity-50">.</span> Ardiansyah
+              Fikri Ardiansyah
             </TransitionLink>
           </div>
         </Magnetic>

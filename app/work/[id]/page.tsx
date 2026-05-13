@@ -9,7 +9,6 @@ import Magnetic from "@/components/Magnetic";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 
-// DATA PROYEK ASLI - Sinkron dengan Beranda
 const projectsData: Record<string, { 
   title: string; 
   category: string; 
@@ -22,74 +21,74 @@ const projectsData: Record<string, {
   nextProject: { title: string; id: string } 
 }> = {
   "01": {
-    title: "Abinawa Heritage",
-    category: "Digital Heritage / Culture",
-    image: "/image/abinawa.webp",
-    gif: "/gif/ceritain.gif",
-    description: [
-      "Abinawa Heritage is an ambitious digital initiative dedicated to the preservation and dissemination of cultural artifacts. Our mission is to bridge the gap between ancient traditions and modern audiences through immersive storytelling.",
-      "The platform utilizes cutting-edge web technologies to create a virtual museum experience, ensuring that historical narratives are not just stored, but lived and felt by a global audience.",
-    ],
-    service: "Web Strategy / UI Design",
-    year: "2025",
-    client: "National Cultural Found.",
-    nextProject: { title: "Event Hub", id: "02" },
-  },
-  "02": {
-    title: "Event Hub",
-    category: "Platform / Management",
+    title: "EventAir",
+    category: "Event Management / UX Design",
     image: "/image/event-hub.png",
     gif: "/gif/event-hub.gif",
     description: [
-      "A high-performance management ecosystem built for the modern event planner. Event Hub focuses on efficiency, scalability, and intuitive user experiences to handle complex logistics seamlessly.",
-      "From real-time attendee tracking to integrated scheduling, every feature is designed to reduce friction and amplify the impact of every event, regardless of scale.",
+      "EventAir is a comprehensive platform for campus event orchestration, featuring real-time attendance and dynamic scheduling.",
+      "Designed to streamline complex event logistics, it provides organizers with powerful tools to manage participants and track engagement effortlessly.",
     ],
     service: "Full-stack / UX Design",
     year: "2024",
     client: "Liaison Global",
-    nextProject: { title: "Green Life", id: "03" },
+    nextProject: { title: "EcoSphere", id: "02" },
   },
-  "03": {
-    title: "Green Life",
-    category: "Ecommerce / Sustainability",
+  "02": {
+    title: "EcoSphere",
+    category: "Sustainability / E-commerce",
     image: "/image/green-life.png",
     gif: "/gif/green-life.gif",
     description: [
-      "Green Life is a digital marketplace championing the sustainability movement. We created a shopping experience that feels as organic and refreshing as the products themselves.",
-      "The project involved a deep dive into ethical consumer behavior, resulting in a minimalist interface that emphasizes product transparency and environmental consciousness.",
+      "Reimagining sustainable shopping through a minimalist and performance-driven marketplace experience.",
+      "EcoSphere championing the sustainability movement by creating a shopping experience that feels as organic and refreshing as the products themselves.",
     ],
     service: "Branding / Ecommerce",
     year: "2024",
     client: "Gaia Organics",
-    nextProject: { title: "Recipe Mama", id: "04" },
+    nextProject: { title: "Culinara", id: "03" },
   },
-  "04": {
-    title: "Recipe Mama",
-    category: "Food / Community",
+  "03": {
+    title: "Culinara",
+    category: "Social Media / Gastronomy",
     image: "/image/recipe-mama.png",
     gif: "/gif/recipe-mama.gif",
     description: [
-      "A vibrant community platform where the love for home cooking thrives. Recipe Mama transforms traditional recipes into interactive, social culinary journeys.",
-      "We focused on building a robust social graph and high-speed asset delivery, allowing a fast-growing community to share and discover flavors from around the world instantly.",
+      "Connecting culinary enthusiasts through a shared community space for recipes and gastronomic stories.",
+      "Culinara transforms traditional recipes into interactive, social culinary journeys, focusing on robust social interaction and high-speed asset delivery.",
     ],
     service: "React Native / Backend",
     year: "2024",
     client: "Taste Collective",
-    nextProject: { title: "HPC Japan", id: "05" },
+    nextProject: { title: "SonicFlow", id: "04" },
+  },
+  "04": {
+    title: "SonicFlow",
+    category: "Entertainment / API Integration",
+    image: "/image/abinawa.webp",
+    gif: "/gif/ceritain.gif",
+    description: [
+      "High-fidelity music streaming interface with seamless Spotify API integration and custom playback logic.",
+      "The platform focuses on providing a fluid and immersive audio experience, leveraging cutting-edge web technologies for real-time synchronization.",
+    ],
+    service: "Web Strategy / UI Design",
+    year: "2025",
+    client: "National Cultural Found.",
+    nextProject: { title: "SIMAK-GO", id: "05" },
   },
   "05": {
-    title: "HPC Japan",
-    category: "Consulting / Business",
+    title: "SIMAK-GO",
+    category: "Backend / Clean Architecture",
     image: "/image/hpc-japan.webp",
     gif: "/gif/sakura-japan.gif",
     description: [
-      "HPC Japan represents the pinnacle of business efficiency. The consulting agency required a digital presence that mirrored their surgical precision and strategic depth.",
-      "The visual identity combines traditional Japanese aesthetics with modernist layout principles, conveying a brand that is both deeply rooted in heritage and aggressively forward-looking.",
+      "Academic information system built with Go, emphasizing scalability and robust database design.",
+      "SIMAK-GO represents the pinnacle of business efficiency, combining clean architecture with high-performance backend systems.",
     ],
-    service: "Web Consulting",
+    service: "Backend Development",
     year: "2023",
     client: "HPC International",
-    nextProject: { title: "Abinawa Heritage", id: "01" },
+    nextProject: { title: "EventAir", id: "01" },
   },
 };
 
@@ -173,7 +172,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         <div className="mx-auto max-w-[1400px]">
           <div className="detail-image shadow-2xl relative aspect-[16/9] w-full overflow-hidden bg-white">
             <Image
-              src={project.gif || project.image}
+              src={project.image}
               alt={project.title}
               fill
               unoptimized

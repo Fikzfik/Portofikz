@@ -45,10 +45,10 @@ export default function Contact() {
       <div className="w-full max-w-6xl mx-auto px-6 mb-32">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 text-[14px] md:text-[16px] font-light">
           <div className="contact-fade flex items-center gap-2 cursor-pointer hover:text-white/60 transition-colors">
-            +62 812 3456 7890 <span className="text-[10px]">&rarr;</span>
+            089656716141 <span className="text-[10px]">&rarr;</span>
           </div>
           <div className="contact-fade flex items-center gap-2 cursor-pointer hover:text-white/60 transition-colors">
-            work@portofikz.com <span className="text-[10px]">&rarr;</span>
+            fikriardi2004@gmail.com <span className="text-[10px]">&rarr;</span>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export default function Contact() {
           ref={textRef} 
           className="text-[#951f26] text-[13vw] font-bold uppercase tracking-tighter leading-none text-center w-full select-none"
         >
-          House of Fikz
+          Let&apos;s Collab
         </h1>
 
         {/* Tiny Sub-footer */}
@@ -83,12 +83,12 @@ export default function Contact() {
 
           <div className="flex flex-col">
             <span>Instagram</span>
-            <span className="text-white hover:text-white/50 cursor-pointer">@fikzardiansyah</span>
+            <span className="text-white hover:text-white/50 cursor-pointer">@fikzfik</span>
           </div>
 
           <div className="flex flex-col">
             <span>LinkedIn</span>
-            <span className="text-white hover:text-white/50 cursor-pointer">@fikzardiansyah</span>
+            <span className="text-white hover:text-white/50 cursor-pointer">@fikriardiansyah</span>
           </div>
 
         </div>

@@ -5,10 +5,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const stats = [
-  { value: 15, suffix: "+", label: "Projects Shipped" },
-  { value: 3, suffix: "+", label: "Years of Craft" },
-  { value: 100, suffix: "%", label: "Client Satisfaction" },
-  { value: 8, suffix: "+", label: "Happy Clients" },
+  { value: 15, suffix: "+", label: "Digital Solutions" },
+  { value: 3, suffix: "+", label: "Years Experience" },
+  { value: 100, suffix: "%", label: "Precision Rate" },
+  { value: 8, suffix: "+", label: "Trusted Partners" },
 ];
 
 export default function Stats() {

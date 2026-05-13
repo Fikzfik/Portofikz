@@ -14,7 +14,7 @@ const testimonials = [
     index: "01",
   },
   {
-    quote: "Working with Fikz was a seamless experience. Complex requirements turned into an elegant, high-performance solution.",
+    quote: "Working with Fikri was a seamless experience. Complex requirements turned into an elegant, high-performance solution.",
     author: "Marc Jacobs",
     role: "Director, Creative Lab",
     index: "02",

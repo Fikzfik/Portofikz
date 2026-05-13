@@ -115,13 +115,13 @@ export default function Hero() {
         >
              <h1 
                ref={titleRef}
-               className="text-[28px] md:text-[42px] leading-[1.1] tracking-tight font-medium text-[#f5f5f5]"
+               className="text-[32px] md:text-[56px] leading-[1.0] tracking-tighter font-semibold text-[#f5f5f5]"
              >
-               Fikri Ardiansyah.
+               Architecting
                <br />
-               Backend Development & 
+               Scalable Systems &
                <br />
-               Fullstack Engineering.
+               Digital Experiences.
              </h1>
              
              <div className="mt-8 relative flex items-center justify-between w-[250px]">

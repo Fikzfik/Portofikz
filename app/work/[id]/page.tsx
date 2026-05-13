@@ -18,48 +18,52 @@ const projectsData: Record<string, {
   service: string; 
   year: string; 
   client: string; 
+  link: string;
   nextProject: { title: string; id: string } 
 }> = {
   "01": {
     title: "EventAir",
-    category: "Event Management / UX Design",
+    category: "Tournament Management / UX Design",
     image: "/image/event-hub.png",
     gif: "/gif/event-hub.gif",
     description: [
-      "EventAir is a comprehensive platform for campus event orchestration, featuring real-time attendance and dynamic scheduling.",
+      "EventAir is a high-performance Neo-Brutalist platform for managing competitive tournaments and campus events with real-time orchestration.",
       "Designed to streamline complex event logistics, it provides organizers with powerful tools to manage participants and track engagement effortlessly.",
     ],
     service: "Full-stack / UX Design",
     year: "2024",
     client: "Liaison Global",
-    nextProject: { title: "EcoSphere", id: "02" },
+    link: "https://event-air-tg6a.vercel.app/",
+    nextProject: { title: "Echosphere", id: "02" },
   },
   "02": {
-    title: "EcoSphere",
+    title: "Echosphere",
     category: "Sustainability / E-commerce",
     image: "/image/green-life.png",
     gif: "/gif/green-life.gif",
     description: [
-      "Reimagining sustainable shopping through a minimalist and performance-driven marketplace experience.",
-      "EcoSphere championing the sustainability movement by creating a shopping experience that feels as organic and refreshing as the products themselves.",
+      "Reimagining sustainable shopping through a minimalist and performance-driven marketplace experience for eco-conscious consumers.",
+      "Echosphere championing the sustainability movement by creating a shopping experience that feels as organic and refreshing as the products themselves.",
     ],
     service: "Branding / Ecommerce",
     year: "2024",
     client: "Gaia Organics",
-    nextProject: { title: "Culinara", id: "03" },
+    link: "https://green-life-teal.vercel.app/",
+    nextProject: { title: "CampQuest", id: "03" },
   },
   "03": {
-    title: "Culinara",
-    category: "Social Media / Gastronomy",
+    title: "CampQuest",
+    category: "Rental System / Glassmorphism",
     image: "/image/recipe-mama.png",
     gif: "/gif/recipe-mama.gif",
     description: [
-      "Connecting culinary enthusiasts through a shared community space for recipes and gastronomic stories.",
-      "Culinara transforms traditional recipes into interactive, social culinary journeys, focusing on robust social interaction and high-speed asset delivery.",
+      "A premium equipment rental platform for outdoor enthusiasts, featuring a sleek glassmorphic UI and seamless booking flow.",
+      "CampQuest transforms the outdoor equipment rental process into a modern, transparent, and highly interactive digital experience.",
     ],
-    service: "React Native / Backend",
+    service: "Web App / UI Design",
     year: "2024",
-    client: "Taste Collective",
+    client: "Project Alat Camping",
+    link: "https://projectalatcamping-production.up.railway.app/login",
     nextProject: { title: "SonicFlow", id: "04" },
   },
   "04": {
@@ -74,6 +78,7 @@ const projectsData: Record<string, {
     service: "Web Strategy / UI Design",
     year: "2025",
     client: "National Cultural Found.",
+    link: "#",
     nextProject: { title: "SIMAK-GO", id: "05" },
   },
   "05": {
@@ -88,6 +93,7 @@ const projectsData: Record<string, {
     service: "Backend Development",
     year: "2023",
     client: "HPC International",
+    link: "#",
     nextProject: { title: "EventAir", id: "01" },
   },
 };
@@ -215,6 +221,26 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
                   <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-4">Client Representative</p>
                   <p className="text-xl font-medium italic">{project.client}</p>
                 </div>
+                {project.link !== "#" && (
+                  <div className="md:col-span-2 pt-8">
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="group/link inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.4em] text-black"
+                    >
+                      <span className="relative overflow-hidden py-1">
+                        Visit Live Site
+                        <span className="absolute bottom-0 left-0 h-[1px] w-full bg-black translate-x-[-100%] group-hover/link:translate-x-0 transition-transform duration-500" />
+                      </span>
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 group-hover/link:bg-black group-hover/link:text-white transition-all duration-500">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="rotate-[-45deg] group-hover/link:rotate-0 transition-transform duration-500">
+                          <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                )}
              </div>
           </div>
         </div>
